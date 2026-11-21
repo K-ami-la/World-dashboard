@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tableau de bord mondial</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+</head>
+<body>
+  <header>
+    <h1>Tableau de bord mondial</h1>
+    <p>Comparez des pays avec les données ouvertes de la Banque mondiale.</p>
+  </header>
+
+  <main>
+    <form method="get" class="controls">
+      <label>
+        Indicateur
+        <select name="indicator">
+          {% for code, label in indicators.items() %}
+          <option value="{{ code }}" {% if code == indicator %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label>
+        Pays (jusqu'à {{ max_countries }}, Ctrl ou Cmd pour en choisir plusieurs)
+        <select name="countries" multiple size="10">
+          {% for c in countries %}
+          <option value="{{ c.code }}" {% if c.code in selected %}selected{% endif %}>{{ c.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <button type="submit">Comparer</button>
+    </form>
+
+    <section class="results">
+      {% if error %}
+        <p class="error">{{ error }}</p>
+      {% elif not series %}
+        <p class="empty">Aucune donnée pour ce choix.</p>
+      {% else %}
+        <h2>{{ indicators[indicator] }}</h2>
+        <div id="chart"></div>
+
+        <table>
+          <thead><tr><th>Pays</th><th>Dernière année</th><th>Valeur</th></tr></thead>
+          <tbody>
+            {% for name, s in series.items() %}
+            <tr>
+              <td>{{ name }}</td>
+              <td>{{ s.years[-1] }}</td>
+              <td>{{ "{:,.1f}".format(s["values"][-1]).replace(",", " ") }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </section>
+  </main>
+
+  <footer>Source : <a href="https://data.worldbank.org/">Banque mondiale, World Development Indicators</a></footer>
+
+  {% if series %}
+  <script>
+    const series = {{ series | tojson }};
+    const traces = Object.entries(series).map(([name, s]) => ({
+      x: s.years, y: s.values, name: name, mode: "lines+markers", type: "scatter"
+    }));
+    Plotly.newPlot("chart", traces, {
+      margin: { t: 20, r: 20, b: 40, l: 70 },
+      xaxis: { title: "Année" },
+      yaxis: { title: {{ indicators[indicator] | tojson }} },
+      legend: { orientation: "h", y: -0.2 }
+    }, { responsive: true, displaylogo: false });
+  </script>
+  {% endif %}
+</body>
+</html>

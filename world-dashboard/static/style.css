@@ -1,0 +1,77 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #1f2933;
+  background: #f5f7fa;
+}
+
+header, main, footer {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+header h1 { margin: 0 0 0.3rem; }
+header p { margin: 0; color: #52606d; }
+
+main {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.controls, .results {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.controls label {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.controls select {
+  display: block;
+  width: 100%;
+  margin-top: 0.4rem;
+  padding: 0.4rem;
+  font: inherit;
+  font-weight: normal;
+}
+
+button {
+  width: 100%;
+  padding: 0.6rem;
+  border: 0;
+  border-radius: 6px;
+  background: #2563eb;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover { background: #1d4ed8; }
+
+.results h2 { margin-top: 0; font-size: 1.1rem; }
+#chart { height: 420px; }
+
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { padding: 0.5rem; border-bottom: 1px solid #e4e7eb; text-align: left; }
+td:last-child, th:last-child { text-align: right; }
+
+.error { color: #b91c1c; }
+.empty { color: #52606d; }
+
+footer { font-size: 0.85rem; color: #52606d; }
+
+@media (max-width: 800px) {
+  main { grid-template-columns: 1fr; }
+}
