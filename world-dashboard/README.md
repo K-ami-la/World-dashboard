@@ -8,7 +8,7 @@ Pick an indicator and up to 6 countries: the app draws an interactive chart (200
 
 ## Why this project
 
-I hold a master's degree in international studies and I'm now a developer at École 42. This project brings both together: asking real questions about countries, and answering them with code and public data.
+I studied international studies and I'm now a developer at École 42. This project brings both together: asking real questions about countries, and answering them with code and public data.
 
 ## Stack
 
