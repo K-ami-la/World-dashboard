@@ -20,7 +20,7 @@ I studied international studies and I'm now a developer at École 42. This proje
 ## Run it locally
 
 ```bash
-git clone https://github.com/[pseudo]/world-dashboard.git
+git clone https://github.com/K-ami-la/World-dashboard
 cd world-dashboard
 python3 -m venv venv
 source venv/bin/activate
